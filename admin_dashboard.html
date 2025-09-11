@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard - Campus Event Management</title>
+    <link rel="stylesheet" href="../static/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Admin Dashboard</h1>
+      <h2>Create Event</h2>
+      <form id="createEventForm">
+        <input type="text" id="title" placeholder="Event Title" required />
+        <input type="text" id="type" placeholder="Event Type" required />
+        <input type="date" id="date" required />
+        <textarea id="description" placeholder="Description"></textarea>
+        <button type="submit">Create Event</button>
+      </form>
+      <p id="createMessage"></p>
+
+      <h2>Existing Events</h2>
+      <div id="eventsList"></div>
+
+      <h2>Reports</h2>
+      <button id="eventPopularityBtn">Event Popularity Report</button>
+      <button id="studentParticipationBtn">Student Participation Report</button>
+      <button id="topActiveStudentsBtn">Top 3 Active Students</button>
+      <div id="reports"></div>
+
+      <a href="admin_login.html">Logout</a>
+    </div>
+    <script src="../static/admin_dashboard.js"></script>
+  </body>
+</html>

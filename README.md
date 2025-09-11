@@ -1,153 +1,166 @@
-Campus Event Management – Reporting Prototype
+# Campus Event Management Platform
 
-This prototype is a small Flask + SQLite app that lets you create campus events, register students, mark attendance, collect feedback, and generate a few quick reports. It’s minimal and easy to test.
+A full-stack web application for managing campus events with separate logins for admins and students.
 
-⸻
+## Features
 
-Tech Stack
-	•	Backend: Flask (Python)
-	•	Database: SQLite (campus.db in the repo root)
-	•	Testing: Postman / curl
+- **Admin Features:**
 
-⸻
+  - Login with name and password
+  - Create events (title, type, date, description)
+  - View reports (event popularity, student participation, top active students)
 
-Setup
-	1.	Python: 3.10+ recommended.
-	2.	Install dependencies:
+- **Student Features:**
 
-pip install -r requirements.txt
+  - Login with USN, college name, and phone number
+  - Browse and register for events
+  - Mark attendance
+  - Submit feedback (1-5 rating)
 
+- **Reports:**
+  - Total registrations per event
+  - Attendance percentage
+  - Average feedback score
+  - Event Popularity Report (sorted by registrations)
+  - Student Participation Report (events attended per student)
+  - Top 3 most active students
 
-⸻
+## Tech Stack
 
-Running the Server
-	•	Default port (5000):
+- **Backend:** Flask (Python)
+- **Database:** SQLite with SQLAlchemy ORM
+- **Frontend:** HTML, CSS, JavaScript
+- **Authentication:** Flask-Login
 
-python app.py
+## Setup Instructions
 
-	•	If 5000 is busy, run on port 5001:
+### Quick Setup (Recommended)
 
-flask run --port=5001
+```bash
+npm run install-deps  # Install Python deps, create DB, populate sample data
+npm start            # Start the Flask server
+```
 
-Note: The first run creates campus.db automatically and seeds demo data.
+### Manual Setup
 
-⸻
+1. **Navigate to the project directory:**
 
-Demo Data (Auto-seeded)
-	•	Colleges: 2
-	•	Students: 5 (IDs 1–5)
-	•	Events: 3 (IDs 1–3)
-	•	Some registrations, attendance, and feedback are preloaded so you can hit the report endpoints immediately.
+   ```bash
+   cd /Users/afrafalakh/Desktop/campus-event
+   ```
 
-⸻
+2. **Install Python dependencies:**
 
-Testing with Postman
-	1.	Import postman_collection.json into Postman.
-	2.	Set the collection variable baseUrl to the server you are running:
-	•	http://localhost:5000
-	•	or http://localhost:5001 if using a custom port.
-	3.	Execute requests in this order for a clean demo:
-	•	Health Check
-	•	Register Student (valid) → then Register Student (duplicate → 409)
-	•	Mark Attendance (valid) → then Attendance (unregistered → 409)
-	•	Submit Feedback (valid) → then Feedback (duplicate → 409)
-	•	Reports: Popularity, Student Participation (ID 1), Top Students, Events by Type (Workshop)
+   ```bash
+   npm run setup
+   # OR manually: cd backend && pip install -r requirements.txt
+   ```
 
-All errors return JSON with an "error" field and proper HTTP status codes.
+3. **Initialize database:**
 
-⸻
+   ```bash
+   npm run db-init
+   # OR manually: cd backend && python create_db.py
+   ```
 
-Testing with curl
+4. **Populate sample data (optional):**
 
-Set a helper variable for convenience:
+   ```bash
+   npm run populate-data
+   # OR manually: cd backend && python sample_data.py
+   ```
 
-BASE=http://localhost:5000
+5. **Run the Flask application:**
 
-(or use http://localhost:5001 if using a different port)
-	•	Health Check
+   ```bash
+   npm start
+   # OR manually: cd backend && python app.py
+   ```
 
-curl -s "$BASE/"
+6. **Access the application:**
+   - Backend API: `http://127.0.0.1:5000`
+   - Frontend pages: Open HTML files in `frontend/` directory in browser
 
-	•	Create Event
+## Database Schema
 
-curl -s -X POST "$BASE/events" \
-  -H "Content-Type: application/json" \
-  -d '{"name":"Intro to GenAI","type":"Workshop","date":"2025-10-10","college_id":1}'
+### Users Table
 
-	•	Register (valid)
+- id (Primary Key)
+- role (admin/student)
+- name
+- password (hashed)
+- usn (for students)
+- college_name (for students)
+- phone_number (for students)
 
-curl -s -X POST "$BASE/register" \
-  -H "Content-Type: application/json" \
-  -d '{"student_id":1,"event_id":1}'
+### Events Table
 
-	•	Register (duplicate → 409)
+- id (Primary Key)
+- title
+- type
+- date
+- description
+- created_by (Foreign Key to Users)
 
-curl -s -i -X POST "$BASE/register" \
-  -H "Content-Type: application/json" \
-  -d '{"student_id":1,"event_id":1}'
+### Registrations Table
 
-	•	Attendance (valid)
+- id (Primary Key)
+- student_id (Foreign Key to Users)
+- event_id (Foreign Key to Events)
+- Unique constraint on (student_id, event_id)
 
-curl -s -X POST "$BASE/attendance" \
-  -H "Content-Type: application/json" \
-  -d '{"student_id":1,"event_id":1,"status":"present"}'
+### Attendance Table
 
-	•	Attendance (not registered → 409)
+- id (Primary Key)
+- registration_id (Foreign Key to Registrations)
+- attended (Boolean)
 
-curl -s -i -X POST "$BASE/attendance" \
-  -H "Content-Type: application/json" \
-  -d '{"student_id":5,"event_id":3,"status":"present"}'
+### Feedback Table
 
-	•	Feedback (valid)
+- id (Primary Key)
+- registration_id (Foreign Key to Registrations)
+- rating (1-5)
+- comments
 
-curl -s -X POST "$BASE/feedback" \
-  -H "Content-Type: application/json" \
-  -d '{"student_id":1,"event_id":1,"rating":5}'
+## API Endpoints
 
-	•	Feedback (duplicate → 409)
+- `POST /admin/login` - Admin login
+- `POST /student/login` - Student login
+- `POST /events/create` - Create event (Admin only)
+- `GET /events` - List all events
+- `POST /events/register` - Register for event (Student only)
+- `POST /events/attendance` - Mark attendance (Student only)
+- `POST /events/feedback` - Submit feedback (Student only)
+- `GET /reports/event-popularity` - Event popularity report (Admin only)
+- `GET /reports/student-participation` - Student participation report (Admin only)
+- `GET /reports/top-active-students` - Top 3 active students (Admin only)
 
-curl -s -i -X POST "$BASE/feedback" \
-  -H "Content-Type: application/json" \
-  -d '{"student_id":1,"event_id":1,"rating":4}'
+## Sample Data
 
-	•	Reports
+- Admin: name="Admin User", password="admin123"
+- Students: USN001, USN002, USN003 with respective details
+- Events: Tech Seminar, Cultural Fest, Sports Meet
 
-curl -s "$BASE/reports/popularity"
-curl -s "$BASE/reports/student-participation/1"
-curl -s "$BASE/reports/top-students"
-curl -s "$BASE/reports/events?type=Workshop"
+## Usage
 
+1. Start the backend server.
+2. Open the frontend HTML files in a browser.
+3. Login as admin or student.
+4. Admins can create events and view reports.
+5. Students can browse events, register, mark attendance, and submit feedback.
 
-⸻
+## Edge Cases Handled
 
-Error Handling
-	•	Duplicate registration → HTTP 409
-	•	Feedback is one per student-event (duplicate → 409)
-	•	Attendance requires registration (otherwise → 409)
-	•	All errors return JSON with an "error" field
+- Duplicate registrations prevented
+- Attendance can only be marked once per registration
+- Feedback can only be submitted once per registration
+- Invalid ratings (not 1-5) rejected
+- Unauthorized access to admin-only features
 
-⸻
+## Future Improvements
 
-Resetting the Database
-
-If you want a fresh start:
-
-rm -f campus.db
-python app.py
-
-This recreates the database and re-seeds the demo data automatically.
-
-⸻
-
-Screenshots / Demo
-
-Screenshots of tested endpoints (from Postman) are saved in the reports/ folder:
-
-Endpoint	Screenshot
-Health Check	reports/health.png
-Register Student	reports/register.png
-Attendance	reports/attendance.png
-Feedback	reports/feedback.png
-Reports	reports/reports.png
-
-These show the server responses, error handling, and reports in action.
+- Add event update/delete functionality
+- Implement proper session management in frontend
+- Add more detailed error handling
+- Improve UI/UX with a modern framework like React
+- Add email notifications for event registrations

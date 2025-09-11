@@ -1,0 +1,203 @@
+{
+  "info": {
+    "name": "Campus Event Management API",
+    "description": "Collection for testing Campus Event Management Platform APIs",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Admin Login",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\": \"admin\", \"password\": \"password\"}"
+        },
+        "url": {
+          "raw": "http://127.0.0.1:5000/admin/login",
+          "protocol": "http",
+          "host": ["127", "0", "0", "1"],
+          "port": "5000",
+          "path": ["admin", "login"]
+        }
+      }
+    },
+    {
+      "name": "Student Login",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"usn\": \"USN001\", \"college_name\": \"ABC College\", \"phone_number\": \"1234567890\"}"
+        },
+        "url": {
+          "raw": "http://127.0.0.1:5000/student/login",
+          "protocol": "http",
+          "host": ["127", "0", "0", "1"],
+          "port": "5000",
+          "path": ["student", "login"]
+        }
+      }
+    },
+    {
+      "name": "Create Event",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"title\": \"Tech Talk\", \"type\": \"Seminar\", \"date\": \"2023-12-01\", \"description\": \"A talk on AI\"}"
+        },
+        "url": {
+          "raw": "http://127.0.0.1:5000/events/create",
+          "protocol": "http",
+          "host": ["127", "0", "0", "1"],
+          "port": "5000",
+          "path": ["events", "create"]
+        }
+      }
+    },
+    {
+      "name": "List Events",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:5000/events",
+          "protocol": "http",
+          "host": ["127", "0", "0", "1"],
+          "port": "5000",
+          "path": ["events"]
+        }
+      }
+    },
+    {
+      "name": "Register for Event",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"event_id\": 1}"
+        },
+        "url": {
+          "raw": "http://127.0.0.1:5000/events/register",
+          "protocol": "http",
+          "host": ["127", "0", "0", "1"],
+          "port": "5000",
+          "path": ["events", "register"]
+        }
+      }
+    },
+    {
+      "name": "Mark Attendance",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"event_id\": 1}"
+        },
+        "url": {
+          "raw": "http://127.0.0.1:5000/events/attendance",
+          "protocol": "http",
+          "host": ["127", "0", "0", "1"],
+          "port": "5000",
+          "path": ["events", "attendance"]
+        }
+      }
+    },
+    {
+      "name": "Submit Feedback",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"event_id\": 1, \"rating\": 5, \"comments\": \"Excellent event!\"}"
+        },
+        "url": {
+          "raw": "http://127.0.0.1:5000/events/feedback",
+          "protocol": "http",
+          "host": ["127", "0", "0", "1"],
+          "port": "5000",
+          "path": ["events", "feedback"]
+        }
+      }
+    },
+    {
+      "name": "Event Popularity Report",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:5000/reports/event-popularity",
+          "protocol": "http",
+          "host": ["127", "0", "0", "1"],
+          "port": "5000",
+          "path": ["reports", "event-popularity"]
+        }
+      }
+    },
+    {
+      "name": "Student Participation Report",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:5000/reports/student-participation",
+          "protocol": "http",
+          "host": ["127", "0", "0", "1"],
+          "port": "5000",
+          "path": ["reports", "student-participation"]
+        }
+      }
+    },
+    {
+      "name": "Top Active Students",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:5000/reports/top-active-students",
+          "protocol": "http",
+          "host": ["127", "0", "0", "1"],
+          "port": "5000",
+          "path": ["reports", "top-active-students"]
+        }
+      }
+    }
+  ]
+}

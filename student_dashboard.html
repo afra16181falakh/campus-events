@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Dashboard - Campus Event Management</title>
+    <link rel="stylesheet" href="../static/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Student Dashboard</h1>
+      <h2>Available Events</h2>
+      <div id="eventsList"></div>
+
+      <h2>Mark Attendance</h2>
+      <form id="attendanceForm">
+        <input
+          type="number"
+          id="eventIdAttendance"
+          placeholder="Event ID"
+          required
+        />
+        <button type="submit">Mark Attendance</button>
+      </form>
+      <p id="attendanceMessage"></p>
+
+      <h2>Submit Feedback</h2>
+      <form id="feedbackForm">
+        <input
+          type="number"
+          id="eventIdFeedback"
+          placeholder="Event ID"
+          required
+        />
+        <input
+          type="number"
+          id="rating"
+          placeholder="Rating (1-5)"
+          min="1"
+          max="5"
+          required
+        />
+        <textarea id="comments" placeholder="Comments"></textarea>
+        <button type="submit">Submit Feedback</button>
+      </form>
+      <p id="feedbackMessage"></p>
+
+      <a href="student_login.html">Logout</a>
+    </div>
+    <script src="../static/student_dashboard.js"></script>
+  </body>
+</html>

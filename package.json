@@ -1,0 +1,38 @@
+{
+  "name": "campus-event-management-platform",
+  "version": "1.0.0",
+  "description": "A full-stack platform for managing campus events with admin and student roles",
+  "main": "backend/app.py",
+  "scripts": {
+    "start": "cd backend && python app.py",
+    "dev": "cd backend && python app.py",
+    "setup": "cd backend && pip install -r requirements.txt",
+    "db-init": "cd backend && python create_db.py",
+    "populate-data": "cd backend && python sample_data.py",
+    "test-api": "echo 'Use Postman or curl to test API endpoints'",
+    "install-deps": "npm run setup && npm run db-init && npm run populate-data"
+  },
+  "keywords": [
+    "flask",
+    "campus",
+    "events",
+    "management",
+    "admin",
+    "student",
+    "api"
+  ],
+  "author": "BlackboxAI",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "."
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "devDependencies": {},
+  "dependencies": {},
+  "peerDependencies": {
+    "python": ">=3.7.0"
+  }
+}

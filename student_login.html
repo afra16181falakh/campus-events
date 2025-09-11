@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Login - Campus Event Management</title>
+    <link rel="stylesheet" href="../static/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Student Login</h1>
+      <form id="studentLoginForm">
+        <input type="text" id="usn" placeholder="USN" required />
+        <input
+          type="text"
+          id="college_name"
+          placeholder="College Name"
+          required
+        />
+        <input
+          type="text"
+          id="phone_number"
+          placeholder="Phone Number"
+          required
+        />
+        <button type="submit">Login</button>
+      </form>
+      <p id="message"></p>
+      <a href="admin_login.html">Admin Login</a>
+    </div>
+    <script src="../static/student_login.js"></script>
+  </body>
+</html>
